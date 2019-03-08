@@ -16,7 +16,8 @@ class Room
   end
 
   def guest_entry_permitted?(guest)
-     if guest.has_ticket?() && room_has_capacity?()
+    guest.pay_entry_fee(self)
+     if guest.has_ticket? && room_is_full? != true
        return true
      else
        return false

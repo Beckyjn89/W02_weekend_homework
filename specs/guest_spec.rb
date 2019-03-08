@@ -27,14 +27,25 @@ def test_customer_has_paid_entry_fee
   actual_return =  @guest_02.pay_entry_fee(@room_01)
   actual = @guest_02.wallet
   assert_equal(15, actual)
-  assert_equal("fee paid", actual_return)
+  assert_equal("fee paid", @guest_02.ticket)
 end
 
 def test_customer_cant_pay_entry_fee
   actual_return = @guest_05.pay_entry_fee(@room_01)
   actual_wallet = @guest_05.wallet
-  assert_equal("unable to pay", actual_return)
+  assert_equal("unable to pay", @guest_05.ticket)
   assert_equal(4, actual_wallet)
+end
+
+def test_customer_has_ticket
+  actual = @guest_01.has_ticket?
+  assert_equal(true, actual)
+end
+
+def test_customer_no_ticket
+  @guest_05.pay_entry_fee(@room_01)
+  actual = @guest_05.has_ticket?
+  assert_equal(false, actual)
 end
 
 end

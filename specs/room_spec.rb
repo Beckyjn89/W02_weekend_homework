@@ -17,7 +17,8 @@ class TestRoom < MiniTest::Test
     @guest_02 = Guest.new("Benny", 20)
     @guest_03 = Guest.new("Agnetha", 25)
     @guest_04 = Guest.new("Bjorn", 20)
-    @guest_05 = Guest.new("Freda", 10)
+    @guest_05 = Guest.new("Freda", 4)
+    @guest_06 = Guest.new("Saga", 10)
   end
 
   def test_does_room_exist
@@ -36,44 +37,50 @@ class TestRoom < MiniTest::Test
     assert_equal([@guest_01], actual)
   end
 
-  # def test_remove_guest_from_room
-  #   @room_01.add_guest_to_room(@guest_01)
-  #   @room_01.add_guest_to_room(@guest_02)
-  #   assert_equal([@guest_01, @guest_02], @room_01.guests)
-  #
-  #   @room_01.remove_guest_from_room(@guest_01)
-  #   actual = @room_01.guests
-  #   assert_equal([@guest_02], actual)
-  # end
+  def test_guest_too_poor_to_enter
+    @room_01.add_guest_to_room(@guest_05)
+    actual = @room_01.guests
+    assert_equal([], actual)
+  end
 
-  # def test_check_capacity__room_full
-  #   @room_01.add_guest_to_room(@guest_01)
-  #   @room_01.add_guest_to_room(@guest_02)
-  #   @room_01.add_guest_to_room(@guest_03)
-  #   @room_01.add_guest_to_room(@guest_04)
-  #   actual = @room_01.room_is_full?
-  #   assert_equal(true, actual)
-  # end
+  def test_remove_guest_from_room
+    @room_01.add_guest_to_room(@guest_01)
+    @room_01.add_guest_to_room(@guest_02)
+    assert_equal([@guest_01, @guest_02], @room_01.guests)
 
-  # def test_check_capacity__room_not_full
-  #   @room_01.add_guest_to_room(@guest_01)
-  #   @room_01.add_guest_to_room(@guest_02)
-  #   @room_01.add_guest_to_room(@guest_03)
-  #   actual = @room_01.room_is_full?
-  #   assert_equal(false, actual)
-  # end
+    @room_01.remove_guest_from_room(@guest_01)
+    actual = @room_01.guests
+    assert_equal([@guest_02], actual)
+  end
 
-  # def
-  #   test_add_guest_to_full_room
-  #   @room_01.add_guest_to_room(@guest_01)
-  #   @room_01.add_guest_to_room(@guest_02)
-  #   @room_01.add_guest_to_room(@guest_03)
-  #   @room_01.add_guest_to_room(@guest_04)
-  #   assert_equal(4, @room_01.guests.length)
-  #
-  #   @room_01.add_guest_to_room(@guest_05)
-  #   assert_equal([@guest_01, @guest_02, @guest_03, @guest_04], @room_01.guests)
-  # end
+  def test_check_capacity__room_full
+    @room_01.add_guest_to_room(@guest_01)
+    @room_01.add_guest_to_room(@guest_02)
+    @room_01.add_guest_to_room(@guest_03)
+    @room_01.add_guest_to_room(@guest_04)
+    actual = @room_01.room_is_full?
+    assert_equal(true, actual)
+  end
+
+  def test_check_capacity__room_not_full
+    @room_01.add_guest_to_room(@guest_01)
+    @room_01.add_guest_to_room(@guest_02)
+    @room_01.add_guest_to_room(@guest_03)
+    actual = @room_01.room_is_full?
+    assert_equal(false, actual)
+  end
+
+  def
+    test_add_guest_to_full_room
+    @room_01.add_guest_to_room(@guest_01)
+    @room_01.add_guest_to_room(@guest_02)
+    @room_01.add_guest_to_room(@guest_03)
+    @room_01.add_guest_to_room(@guest_04)
+    assert_equal(4, @room_01.guests.length)
+
+    @room_01.add_guest_to_room(@guest_06)
+    assert_equal([@guest_01, @guest_02, @guest_03, @guest_04], @room_01.guests)
+  end
 
 
 end

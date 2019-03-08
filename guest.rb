@@ -1,26 +1,27 @@
 class Guest
-  attr_reader :name, :wallet
+  attr_reader :name, :wallet, :ticket
 
   def initialize(name, wallet)
     @name = name
     @wallet = wallet
+    @ticket = "fee paid"
   end
 
   def pay_entry_fee(room)
-    if
-    (@wallet - room.entry_fee) >= 0
+    if ((@wallet - room.entry_fee) >= 0)
       @wallet -= room.entry_fee
-      return "fee paid"
     else
-      return "unable to pay"
+      @ticket = "unable to pay"
     end
   end
 
   def has_ticket?
-    if pay_entry_fee() == "fee paid"
+    if @ticket == "fee paid"
       return true
     else
       return false
     end
   end
+
+
 end
