@@ -11,14 +11,16 @@ class TestRoom < MiniTest::Test
 
     @song_01 = Song.new("Bohemian Rhapsody", "Queen")
     @song_02 = Song.new("Hey Jude", "The Beatles")
-    @song_03 = Song.new("Thank u, next", "Ariana Grande")
+    @song_03 = Song.new("Total Eclipse of the Heart", "Bonnie Tyler")
+    @song_04 = Song.new("The Winner Takes it All", "ABBA")
+    @song_05 = Song.new("Bennie and the Jets", "Elton John")
 
-    @guest_01 = Guest.new("Anni-Frid", 25)
-    @guest_02 = Guest.new("Benny", 20)
-    @guest_03 = Guest.new("Agnetha", 25)
-    @guest_04 = Guest.new("Bjorn", 20)
-    @guest_05 = Guest.new("Freda", 4)
-    @guest_06 = Guest.new("Saga", 10)
+    @guest_01 = Guest.new("Anni-Frid", 25, "Mamma Mia")
+    @guest_02 = Guest.new("Benny", 20, "Bennie and the Jets")
+    @guest_03 = Guest.new("Agnetha", 25, "The Winner Takes it All")
+    @guest_04 = Guest.new("Bjorn", 20, "Hey Jude")
+    @guest_05 = Guest.new("Freda", 4, "Total Eclipse of the Heart")
+    @guest_06 = Guest.new("Saga", 10, "Footloose")
   end
 
   def test_does_room_exist
@@ -29,6 +31,12 @@ class TestRoom < MiniTest::Test
     @room_01.add_song_to_playlist(@song_01)
     actual = @room_01.playlist
     assert_equal([@song_01], actual)
+  end
+
+  def test_add_multiple_songs_to_playlist
+    @room_01.add_song_to_playlist(@song_01, @song_02)
+    actual = @room_01.playlist
+    assert_equal([@song_01, @song_02], actual)
   end
 
   def test_add_guest_to_room
