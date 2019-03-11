@@ -3,6 +3,7 @@ require("minitest/rg")
 require_relative("../guest")
 require_relative("../room")
 require_relative("../song")
+require_relative('../bar')
 
 class TestGuest < MiniTest::Test
 def setup
@@ -19,6 +20,11 @@ def setup
   @song_03 = Song.new("Total Eclipse of the Heart", "Bonnie Tyler")
   @song_04 = Song.new("The Winner Takes it All", "ABBA")
   @song_05 = Song.new("Bennie and the Jets", "Elton John")
+
+  @bar = Bar.new
+  @bar.add_stock_to_bar("Beer", 4)
+  @bar.add_stock_to_bar("Gin and tonic", 5)
+  @bar.add_stock_to_bar("Coca Cola", 1)
 
 end
 
@@ -45,6 +51,7 @@ def test_customer_cant_pay_entry_fee
 end
 
 def test_customer_has_ticket
+  @guest_01.pay_entry_fee(@room_01)
   actual = @guest_01.ticket
   assert_equal(true, actual)
 end
@@ -67,4 +74,9 @@ def test_room_doesnt_have_fave_song
     assert_equal("This room sucks", actual)
 end
 
+def test_customer_buy_drink
+  @guest_01.buy_drink(@bar, "Beer")
+  actual = @guest_01.wallet
+  assert_equal(21, actual)
+end
 end

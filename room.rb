@@ -1,6 +1,6 @@
 class Room
 
-  attr_reader :room_name, :playlist, :guests, :entry_fee
+  attr_reader :room_name, :playlist, :guests, :entry_fee, :till
 
   def initialize(room_name, capacity)
     @room_name = room_name
@@ -8,6 +8,7 @@ class Room
     @guests = []
     @capacity = capacity
     @entry_fee = 5
+    @till = 0
   end
 
   def add_song_to_playlist(*song)
@@ -26,6 +27,7 @@ class Room
   def add_guest_to_room(guest)
     if guest_entry_permitted?(guest) == true
       @guests.push(guest)
+      @till += @entry_fee
     end
   end
 
@@ -41,5 +43,9 @@ class Room
     end
   end
 
+def customer_buys_drink(guest, bar, drink)
+  guest.buy_drink(bar, drink)
+  @till += bar.check_drink_price(drink)
+end
 
 end

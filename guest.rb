@@ -4,15 +4,14 @@ class Guest
   def initialize(name, wallet, fave_song)
     @name = name
     @wallet = wallet
-    @ticket = true
+    @ticket = false
     @fave_song = fave_song
   end
 
   def pay_entry_fee(room)
     if ((@wallet - room.entry_fee) >= 0)
       @wallet -= room.entry_fee
-    else
-      @ticket = false
+      @ticket = true
     end
   end
 
@@ -28,6 +27,10 @@ class Guest
     return room_has_song
   end
 
-
+def buy_drink(bar, drink)
+  if ((@wallet - bar.check_drink_price(drink)) >= 0)
+    (@wallet -= bar.check_drink_price(drink))
+  end
+end
 
 end

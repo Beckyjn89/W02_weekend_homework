@@ -3,6 +3,7 @@ require("minitest/rg")
 require_relative("../room")
 require_relative("../song")
 require_relative("../guest")
+require_relative("../bar")
 
 class TestRoom < MiniTest::Test
 
@@ -21,12 +22,17 @@ class TestRoom < MiniTest::Test
     @guest_04 = Guest.new("Bjorn", 20, "Hey Jude")
     @guest_05 = Guest.new("Freda", 4, "Total Eclipse of the Heart")
     @guest_06 = Guest.new("Saga", 10, "Footloose")
+
+    @bar = Bar.new
+    @bar.add_stock_to_bar("Beer", 4)
+    @bar.add_stock_to_bar("Gin and tonic", 5)
+    @bar.add_stock_to_bar("Coca Cola", 1)
   end
 
   def test_does_room_exist
     assert_equal("Room 1", @room_01.room_name)
   end
-
+  #
   def test_add_song_to_playlist
     @room_01.add_song_to_playlist(@song_01)
     actual = @room_01.playlist
@@ -90,5 +96,22 @@ class TestRoom < MiniTest::Test
     assert_equal([@guest_01, @guest_02, @guest_03, @guest_04], @room_01.guests)
   end
 
+  def test_add_entry_fee_to_till
+    @room_01.add_guest_to_room(@guest_01)
+    @room_01.add_guest_to_room(@guest_02)
+    @room_01.add_guest_to_room(@guest_03)
+    @room_01.add_guest_to_room(@guest_04)
+    actual = @room_01.till
+    assert_equal(20, actual)
+  end
+
+
+  def test_customer_buys_drink
+    @room_01.add_guest_to_room(@guest_01)
+    @room_01.customer_buys_drink(@guest_01, @bar, "Beer")
+    actual = @room_01.till
+    assert_equal(9, actual)
+
+  end
 
 end
